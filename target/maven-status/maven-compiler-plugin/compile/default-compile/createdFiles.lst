@@ -1,0 +1,5 @@
+com\example\demo\entities\Entity.class
+com\example\demo\repositories\EntityRepository.class
+com\example\demo\repositories\EntityRepositoryJDBC.class
+com\example\demo\entities\Attribute.class
+com\example\demo\entities\EntityType.class
