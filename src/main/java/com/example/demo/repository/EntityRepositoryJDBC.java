@@ -9,6 +9,7 @@ import com.example.demo.model.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -24,7 +25,7 @@ public class EntityRepositoryJDBC  implements EntityRepository{
     public Entity getEntityById(long id) {
         String query = "select entity.entity_id,entity.entity_name,entity.entity_type_id,entity_type.entity_type_name from entity inner JOIN entity_type ON entity.entity_type_id = entity_type.entity_type_id and entity.entity_type_id = ? ";
         return jdbcTemplate.queryForObject(
-                query, new Object[] { id }, new EntityRowMapper());
+                query, new Object[] { id },new int[]{Types.INTEGER, Types.VARCHAR}, new EntityRowMapper());
     }
 
     @Override
@@ -43,11 +44,11 @@ public class EntityRepositoryJDBC  implements EntityRepository{
         String query2 = "select * from value where entity_id = ? and attribute_id = ?"; //получаем сокет материнки
         assert attribute != null;
         Value value = jdbcTemplate.queryForObject(
-                query2, new Object[] { entity.getId(), attribute.getAttributeId() }, new ValueRowMapper());
+                query2, new Object[] { entity.getId(), attribute.getAttributeId() },new int[]{Types.INTEGER, Types.VARCHAR}, new ValueRowMapper());
 
         assert value != null;
         return jdbcTemplate.query(
-                s, new Object[] { value.getValue() }, new EntityRowMapper());
+                s, new Object[] { value.getValue() },new int[]{Types.INTEGER, Types.VARCHAR}, new EntityRowMapper());
     }
 
 
